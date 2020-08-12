@@ -42,6 +42,10 @@ dsn=$(echo -n "$url" | base64)
 
 export REDIS_CONFIG=$dsn
 
+passwd=$(head -c 12 /dev/urandom | shasum| cut -d' ' -f1)
+
+export OPENFAAS_PASSWORD=$passwd
+
 
 rpConfig(){
     i=0
