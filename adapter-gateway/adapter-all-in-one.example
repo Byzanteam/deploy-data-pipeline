@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: adapter
+  name: adapter-gateway
+  namespace: openfaas
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: adapter
+      component: adapter-gateway
+  template:
+    metadata:
+      annotations:
+        prometheus.io.scrape: "false"
+      labels:
+        app: adapter
+        component: adapter-gateway
+    spec:
+      imagePullSecrets:
+      - name: aliyunhangzhou
+      containers:
+        - name: adapter
+          image: registry.cn-hangzhou.aliyuncs.com/byzanteam/adapter-gateway:dev
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          volumeMounts:
+          - name: config
+            mountPath: /adapter-gateway/configs/config.yml
+            #subPath: config.yml
+      volumes:
+      - name: config
+        hostPath:
+          path: ${CWD}/adapter-gateway/config.yml
+          type: File
+        #configMap:
+        #  name: adapter-gateway
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: adapter-gateway
+  labels:
+    app: adapter
+  namespace: openfaas
+spec:
+  selector:
+    app: adapter
+  type: NodePort
+  ports:
+    - name: http
+      port: 8081
+      protocol: TCP
+      targetPort: 8080
+      nodePort: 32000

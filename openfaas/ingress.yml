@@ -1,0 +1,9 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  # namespace: openfaas
+  name: gateway-external
+spec:
+  backend:
+    serviceName: gateway-external
+    servicePort: 8080

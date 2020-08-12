@@ -1,0 +1,63 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-config
+  namespace: openfaas
+  labels:
+    app: postgres
+data:
+  POSTGRES_DB: ${DB_NAME} 
+  POSTGRES_USER: ${DB_USER} 
+  POSTGRES_PASSWORD: ${DB_PASSWORD} 
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres
+  namespace: openfaas
+spec:
+  serviceName: "postgres"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:11
+          envFrom:
+            - configMapRef:
+                name: postgres-config
+          ports:
+            - containerPort: 5432
+              name: postgredb
+          volumeMounts:
+            - name: postgres-data
+              mountPath: /var/lib/postgresql/data
+              subPath: postgres
+      volumes:
+        - name: postgres-data
+          hostPath:
+            path: ${DB_PATH}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+  labels:
+    app: postgres
+  namespace: openfaas
+spec:
+  selector:
+    app: postgres
+  type: NodePort
+  ports:
+    - name: http
+      port: 5432
+      protocol: TCP
+      targetPort: 5432
+
