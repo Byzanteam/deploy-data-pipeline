@@ -30,15 +30,15 @@ CONFIGS=("adapter-gateway/config.yml" "adapter-gateway/adapter-all-in-one.yaml" 
 
 source hack/envs.conf
 
-url="host=postgres.openfaas.svc.cluster.local port=5432 user=${DB_USER} dbname=${DB_NAME} password=${DB_PASSWORD}"
+url="host=postgres.openfaas.svc.cluster.local port=5432 user=${DB_USER} dbname=${DB_NAME} password=${DB_PASSWORD} sslmode=disable"
 
-dsn=$(echo -n "$url" | base64)
+dsn=$(echo -n "$url" | base64 -w 0)
 
 export POSTGRES_DSN=$dsn
 
 url="redis-0.redis.openfaas.svc.cluster.local:6379;${REDIS_PASSWORD};0"
 
-dsn=$(echo -n "$url" | base64)
+dsn=$(echo -n "$url" | base64 -w 0)
 
 export REDIS_CONFIG=$dsn
 
