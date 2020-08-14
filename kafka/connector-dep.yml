@@ -21,7 +21,7 @@ spec:
         component: kafka-connector
     spec:
       imagePullSecrets:
-      - name: aliyunhangzhou
+      - name: alihangzhou
       containers:
       - name: kafka
         image: registry.cn-hangzhou.aliyuncs.com/byzanteam/kafka-connector:v0.1

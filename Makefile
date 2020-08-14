@@ -31,3 +31,8 @@ mk-dir:
 .PHONY: replace-config
 replace-config: 
 	bash hack/replace-config.sh	
+
+.PHONY: pull-images
+pull-images: 
+	bash hack/pull-images.sh
+	

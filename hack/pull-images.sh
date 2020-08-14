@@ -26,9 +26,4 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-source hack/envs.conf
-
-
-mkdir -p ${DB_PATH}
-mkdir -p /data/redis/data/ /data/redis/conf/ /data/redis/log/
-
+docker pull wurstmeister/kafka:0.11.0.1 wurstmeister/zookeeper:3.4.6 postgres:11 busybox redis:5.0.6 

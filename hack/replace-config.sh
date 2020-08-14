@@ -46,6 +46,9 @@ passwd=$(head -c 12 /dev/urandom | shasum| cut -d' ' -f1)
 
 export OPENFAAS_PASSWORD=$passwd
 
+kubectl -n openfaas create secret generic basic-auth \
+--from-literal=basic-auth-user=admin \
+--from-literal=basic-auth-password="$passwd"
 
 rpConfig(){
     i=0

@@ -20,7 +20,7 @@ spec:
         component: adapter-gateway
     spec:
       imagePullSecrets:
-      - name: aliyunhangzhou
+      - name: alihangzhou
       containers:
         - name: adapter
           image: registry.cn-hangzhou.aliyuncs.com/byzanteam/adapter-gateway:dev
