@@ -1,0 +1,67 @@
+version: 1.0
+provider:
+  name: openfaas
+  gateway: http://127.0.0.1:31112
+functions:
+  buildtable:
+    lang: python3-flask
+    handler: ./buildtable
+    image: registry.cn-hangzhou.aliyuncs.com/byzanteam/buildtable:v0.2
+    upstream_timeout: 7200s 
+    environment:
+      gateway: "http://gateway.openfaas.svc.cluster.local:8080"
+      RAW_BODY: False
+      upstream_timeout: 7200s 
+      exec_timeout: 7200s
+    secrets:
+      - alihangzhou
+  skylark-form-by-page:
+    lang: python3-flask
+    handler: ./skylarkformbypage
+    image: registry.cn-hangzhou.aliyuncs.com/byzanteam/skylark-form-by-page:v0.2
+    environment:
+      gateway: "http://gateway.openfaas.svc.cluster.local:8080"
+      RAW_BODY: False
+      exec_timeout: 120s
+    secrets:
+      - alihangzhou
+  deleteskylark:
+    lang: golang-http
+    handler: ./deleteskylark
+    image: registry.cn-hangzhou.aliyuncs.com/byzanteam/deleteskylark:v0.1
+    build_args:
+      GO111MODULE: on
+    secrets:
+      - alihangzhou
+    environment:
+      gateway: "http://gateway.openfaas.svc.cluster.local:8080"
+  skylark-schema:
+    lang: golang-http
+    handler: ./skylarkschema
+    image: registry.cn-hangzhou.aliyuncs.com/byzanteam/skylarkschema:v0.1
+    build_args:
+      GO111MODULE: on
+    secrets:
+      - alihangzhou
+  write2postgres:
+    lang: golang-http
+    handler: ./write2postgres
+    image: registry.cn-hangzhou.aliyuncs.com/byzanteam/write2postgres:v0.2
+    environment:
+      write_debug: true
+    #labels:
+      #"com.openfaas.scale.min": "3"
+      #"com.openfaas.scale.max": "5"
+    build_args:
+      GO111MODULE: on
+    secrets:
+      - alihangzhou
+      - postgres-dsn
+  redis-metadata:
+    lang: golang-http
+    handler: ./redis-metadata
+    image: registry.cn-hangzhou.aliyuncs.com/byzanteam/redis-metadata:dev
+    build_args:
+      GO111MODULE: on
+    secrets:
+      - redis-config
