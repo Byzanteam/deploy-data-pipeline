@@ -20,13 +20,15 @@ spec:
       labels:
         app: nats
     spec:
+      imagePullSecrets:
+      - name: alihangzhou
       containers:
       - name:  nats
         resources:
             requests:
               memory: 120Mi
             
-        image: nats-streaming:0.17.0
+        image: registry.cn-hangzhou.aliyuncs.com/byzanteam/nats-streaming:0.17.0
         imagePullPolicy: Always
         ports:
         - containerPort: 4222

@@ -18,9 +18,11 @@ spec:
         app: kafka
         component: zookeeper
     spec:
+      imagePullSecrets:
+      - name: alihangzhou
       containers:
       - name: zookeeper
-        image: wurstmeister/zookeeper:3.4.6
+        image: registry.cn-hangzhou.aliyuncs.com/byzanteam/zookeeper:3.4.6
         ports:
         - containerPort: 2181
         env:

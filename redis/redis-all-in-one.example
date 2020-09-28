@@ -34,14 +34,16 @@ spec:
     spec:
       initContainers:
       - name: init-redis
-        image: busybox
+        image: registry.cn-hangzhou.aliyuncs.com/byzanteam/busybox
         command: ['sh', '-c', 'mkdir -p /data/redis/log/;mkdir -p /data/redis/conf/;mkdir -p /data/redis/data/']
         volumeMounts:
         - name: data
           mountPath: /data/redis/redis/
+      imagePullSecrets:
+      - name: alihangzhou
       containers:
       - name: redis
-        image: redis:5.0.6
+        image: registry.cn-hangzhou.aliyuncs.com/byzanteam/redis:5.0.6
         imagePullPolicy: IfNotPresent
         command:
         - sh

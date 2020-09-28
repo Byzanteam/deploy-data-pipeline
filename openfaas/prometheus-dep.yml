@@ -22,13 +22,15 @@ spec:
         checksum/prometheus-config: "ada4dbc469e9e580e303592742f11bef33564377210d69b4ab604f0ee60408f4"
     spec:
       serviceAccountName: openfaas-prometheus
+      imagePullSecrets:
+      - name: alihangzhou
       containers:
       - name: prometheus
         resources:
             requests:
               memory: 512Mi
             
-        image: prom/prometheus:v2.11.0
+        image: registry.cn-hangzhou.aliyuncs.com/byzanteam/prometheus:v2.11.0
         command:
           - "prometheus"
           - "--config.file=/etc/prometheus/prometheus.yml"

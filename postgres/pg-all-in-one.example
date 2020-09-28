@@ -26,9 +26,11 @@ spec:
       labels:
         app: postgres
     spec:
+      imagePullSecrets:
+      - name: alihangzhou
       containers:
         - name: postgres
-          image: postgres:11
+          image: registry.cn-hangzhou.aliyuncs.com/byzanteam/postgres:11
           envFrom:
             - configMapRef:
                 name: postgres-config

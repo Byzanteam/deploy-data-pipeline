@@ -18,9 +18,11 @@ spec:
         app: kafka
         component: kafka-broker
     spec:
+      imagePullSecrets:
+      - name: alihangzhou
       containers:
       - name: kafka
-        image: wurstmeister/kafka:0.11.0.1
+        image: registry.cn-hangzhou.aliyuncs.com/byzanteam/kafka:0.11.0.1
         ports:
         - containerPort: 9092
         env:

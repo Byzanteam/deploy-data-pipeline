@@ -27,6 +27,8 @@ spec:
       - name: auth
         secret:
           secretName: basic-auth
+      imagePullSecrets:
+      - name: alihangzhou
       containers:
       - name: gateway
         resources:
@@ -34,7 +36,7 @@ spec:
               cpu: 50m
               memory: 120Mi
             
-        image: openfaas/gateway:0.18.17
+        image: registry.cn-hangzhou.aliyuncs.com/byzanteam/gateway:0.18.17
         imagePullPolicy: Always
         securityContext:
           readOnlyRootFilesystem: true

@@ -20,13 +20,15 @@ spec:
       labels:
         app: faas-idler
     spec:
+      imagePullSecrets:
+      - name: alihangzhou
       containers:
         - name: faas-idler
           resources:
             requests:
               memory: 64Mi
             
-          image: openfaas/faas-idler:0.3.0
+          image: registry.cn-hangzhou.aliyuncs.com/byzanteam/faas-idler:0.3.0
           imagePullPolicy: Always
           env:
             - name: gateway_url
